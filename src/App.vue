@@ -1,78 +1,100 @@
 <template>
-  <v-app>
-    <v-app-bar app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-app-bar-title>{{ title }}</v-app-bar-title>
-      <v-spacer />
-      <v-btn icon @click="themeDark = !themeDark">
-        <v-icon>mdi-theme-light-dark</v-icon>
-      </v-btn>
-      <v-progress-linear
-        :active="loading"
-        :indeterminate="progress === null"
-        :value="progress"
-        absolute
-        bottom
-        color="primary accent-3"
-      />
-    </v-app-bar>
-
-    <v-navigation-drawer v-model="drawer" app>
-      <v-list link>
-        <v-list-item :to="{ name: 'Home' }">
-          <v-list-item-icon>
-            <v-icon>mdi-home</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>Home</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item :to="{ name: 'About' }">
-          <v-list-item-icon>
-            <v-icon>mdi-information</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>About</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-
-    <v-main>
-      <v-fade-transition mode="out-in">
-        <router-view />
-      </v-fade-transition>
-    </v-main>
-
-    <v-overlay v-show="loading" z-index="999">
-      <v-progress-circular indeterminate size="64" />
-    </v-overlay>
-
-    <v-snackbar
-      v-model="snackbar"
-      app
-      timeout="5000"
-      transition="scroll-y-transition"
-    >
-      {{ snackbarText }}
-      <template #action="{ attrs }">
-        <v-btn color="primary" icon v-bind="attrs" @click="snackbar = false">
-          <v-icon>mdi-close</v-icon>
+  <div>
+    <v-app v-if="$route.meta?.layout">
+      <v-app-bar app>
+        <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+        <v-app-bar-title>{{ title }}</v-app-bar-title>
+        <v-spacer />
+        <warning />
+        <v-btn icon @click="themeDark = !themeDark">
+          <v-icon>mdi-theme-light-dark</v-icon>
         </v-btn>
-      </template>
-    </v-snackbar>
-    <teleport to="head">
-      <meta
-        name="theme-color"
-        :content="vuetify.theme.currentTheme.primary?.toString()"
-      />
-      <link
-        rel="icon"
-        :href="require('@/assets/vuetify.svg')"
-        type="image/svg+xml"
-      />
-    </teleport>
-  </v-app>
+        <v-progress-linear
+          :active="loading"
+          :indeterminate="progress === null"
+          :value="progress"
+          absolute
+          bottom
+          color="primary accent-3"
+        />
+      </v-app-bar>
+  
+      <v-navigation-drawer v-model="drawer" app>
+        <v-list link>
+          <v-list-item :to="{ name: 'Home' }">
+            <v-list-item-icon>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Home</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item :to="{ name: 'About' }">
+            <v-list-item-icon>
+              <v-icon>mdi-information</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>About</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item :to="{ name: 'Map' }">
+            <v-list-item-icon>
+              <v-icon>mdi-information</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Map</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item :to="{ name: 'bigScreen' }">
+            <v-list-item-icon>
+              <v-icon>mdi-information</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>监控大屏</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+  
+      <v-main>
+        <v-fade-transition mode="out-in">
+          <router-view />
+        </v-fade-transition>
+      </v-main>
+  
+      <v-overlay v-show="loading" z-index="999">
+        <v-progress-circular indeterminate size="64" />
+      </v-overlay>
+  
+      <v-snackbar
+        v-model="snackbar"
+        app
+        timeout="5000"
+        transition="scroll-y-transition"
+      >
+        {{ snackbarText }}
+        <template #action="{ attrs }">
+          <v-btn color="primary" icon v-bind="attrs" @click="snackbar = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </template>
+      </v-snackbar>
+      <teleport to="head">
+        <meta
+          name="theme-color"
+          :content="vuetify.theme.currentTheme.primary?.toString()"
+        />
+        <link
+          rel="icon"
+          :href="require('@/assets/vuetify.svg')"
+          type="image/svg+xml"
+        />
+      </teleport>
+    </v-app>
+    <div v-else>
+      <router-view />
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -86,12 +108,18 @@ import {
   type Ref,
   type SetupContext,
 } from 'vue';
+
+import warning from '@/components/warning.vue'
 import { useRoute, useRouter } from 'vue-router/composables';
 import { useStore } from '@logue/vue2-helpers/vuex';
 import { useVuetify } from '@logue/vue2-helpers/vuetify';
 
 /** App */
 export default defineComponent({
+  /** Components */
+  components: {
+    warning,
+  },
   /**
    * Setup
    *

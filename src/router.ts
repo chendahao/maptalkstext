@@ -1,3 +1,10 @@
+/*
+ * @Author: chenhao
+ * @Date: 2022-10-11 15:33:42
+ * @LastEditTime: 2022-10-17 14:58:24
+ * @FilePath: \maptalkstext\src\router.ts
+ * @Description: 
+ */
 /** Vue Router Configure */
 import { nextTick } from 'vue';
 import type { NavigationGuardNext, Route } from 'vue-router';
@@ -16,13 +23,37 @@ import store from '@/store';
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
+    redirect: '/map',
     name: 'Home',
     component: () => import('@/views/HomePage.vue'),
+    meta: {
+      layout: true,
+    }
   },
   {
     path: '/about',
     name: 'About',
     component: () => import('@/views/AboutPage.vue'),
+    meta: {
+      layout: true,
+    }
+  },
+  {
+    path: '/map',
+    name: 'Map',
+    component: () => import('@/views/map/map.vue'),
+    meta: {
+      layout: true,
+      showPanel: true,
+    }
+  },
+  {
+    path: '/bigScreen',
+    name: 'bigScreen',
+    component: () => import('@/views/bigScreen/index.vue'),
+    meta: {
+      layout: false
+    }
   },
   {
     path: '*',

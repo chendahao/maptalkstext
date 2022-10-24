@@ -1,0 +1,12 @@
+[
+  {"type":"Feature","geometry":{"type":"Point","coordinates":[117.65292002058029,39.0170301666666664]},"properties":{"cog":323.4,"heading":511,"mmsi":"413694670","navStatus":5,"rot":-128,"sog":0,"time":"03:23:24","timestamp":1666149804}},
+  {"type":"Feature","geometry":{"type":"Point","coordinates":[117.65192002058029,39.0123096666666666]},"properties":{"cog":150.3,"heading":247,"mmsi":"413325850","navStatus":1,"rot":0,"sog":0.1,"time":"03:28:20","timestamp":1666150100}},
+  {"type":"Feature","geometry":{"type":"Point","coordinates":[117.65906666666667,39.0142750000000004]},"properties":{"cog":168.7,"heading":244,"mmsi":"413293440","navStatus":1,"rot":0,"sog":0,"time":"03:17:22","timestamp":1666149442}},
+  {"type":"Feature","geometry":{"type":"Point","coordinates":[117.65194666666667,39.013541333333334]},"properties":{"cog":111,"heading":511,"mmsi":"412365875","navStatus":0,"rot":-128,"sog":0.1,"time":"03:25:41","timestamp":1666149941}},
+  {"type":"Feature","geometry":{"type":"Point","coordinates":[117.65210666666666,39.016105]},"properties":{"cog":117.4,"heading":237,"mmsi":"413370790","navStatus":1,"rot":0,"sog":0.2,"time":"03:16:57","timestamp":1666149417}},
+  {"type":"Feature","geometry":{"type":"Point","coordinates":[117.65340833333333,39.017719333333334]},"properties":{"cog":247.3,"heading":247,"mmsi":"413484070","navStatus":0,"rot":0,"sog":12.5,"time":"03:28:32","timestamp":1666150112}},
+  {"type":"Feature","geometry":{"type":"Point","coordinates":[117.65182666666667,39.016345333333334]},"properties":{"cog":328.4,"heading":84,"mmsi":"412272450","navStatus":5,"rot":-128,"sog":0,"time":"03:24:10","timestamp":1666149850}},
+  {"type":"Feature","geometry":{"type":"Point","coordinates":[117.65689500000001,39.0129224999999994]},"properties":{"cog":279.8,"heading":276,"mmsi":"413705980","navStatus":0,"rot":0,"sog":10.6,"time":"03:28:19","timestamp":1666150099}},
+  {"type":"Feature","geometry":{"type":"Point","coordinates":[117.65846666666666,39.010387]},"properties":{"cog":81.8,"heading":511,"mmsi":"413311120","navStatus":0,"rot":-128,"sog":0,"time":"03:28:38","timestamp":1666150118}},
+  {"type":"Feature","geometry":{"type":"Point","coordinates":[117.65064000000000,39.017504833333333]},"properties":{"cog":303,"heading":233,"mmsi":"413269000","navStatus":1,"rot":0,"sog":0.2,"time":"03:24:40","timestamp":1666149880}}
+]

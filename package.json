@@ -40,8 +40,13 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@logue/vue2-helpers": "^2.0.3",
+    "@logue/vue2-helpers": "2.0.3",
     "@mdi/font": "^7.0.96",
+    "dayjs": "^1.11.5",
+    "echarts": "^5.4.0",
+    "maptalks": "^1.0.0-rc.14",
+    "maptalks.three": "^0.35.0",
+    "three": "^0.145.0",
     "vue": "^2.7.10",
     "vue-class-component": "^7.2.6",
     "vue-property-decorator": "^9.1.2",

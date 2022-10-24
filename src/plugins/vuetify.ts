@@ -1,4 +1,12 @@
+/*
+ * @Author: chenhao
+ * @Date: 2022-10-11 15:33:42
+ * @LastEditTime: 2022-10-18 09:39:56
+ * @FilePath: \maptalkstext\src\plugins\vuetify.ts
+ * @Description: 
+ */
 /** Vuetify Plugin */
+import 'vuetify/dist/vuetify.min.css'
 import type { UserVuetifyPreset } from 'vuetify';
 import type { VuetifyParsedTheme } from 'vuetify/types/services/theme';
 import Vuetify from 'vuetify/lib/framework';

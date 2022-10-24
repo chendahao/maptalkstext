@@ -124,6 +124,4 @@ When you use this template, try follow the checklist to update your info properl
 
 ## See Also
 
-- [vite-vue2-ts-starter](https://github.com/logue/vite-vue2-ts-starter)
-- [laravel9-vite-vue2-starter](https://github.com/logue/laravel9-vite-vue2-starter) - for Laravel + Breeze.
-- [vite-vue2-ts-ssr-starter](https://github.com/logue/vite-vue2-ts-ssr-starter) - SSR (Server Side Rendering) Version.
+icon [icon](https://materialdesignicons.com/)
