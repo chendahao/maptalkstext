@@ -48,6 +48,7 @@ declare module '@vue/runtime-core' {
     VRow: typeof import('vuetify/lib')['VRow']
     VSnackbar: typeof import('vuetify/lib')['VSnackbar']
     VSpacer: typeof import('vuetify/lib')['VSpacer']
+    VToolbar: typeof import('vuetify/lib')['VToolbar']
     Warning: typeof import('./src/components/warning.vue')['default']
   }
 }

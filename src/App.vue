@@ -203,6 +203,7 @@ export default defineComponent({
     onMounted(() => {
       document.title = title.value;
       loading.value = false;
+      store.dispatch('MapModule/loadConfig')
     });
 
     return {

@@ -1,17 +1,29 @@
 <!--
  * @Author: chenhao
  * @Date: 2022-10-27 10:26:43
- * @LastEditTime: 2022-10-27 17:48:29
+ * @LastEditTime: 2022-10-28 12:00:56
  * @FilePath: \maptalkstext\src\views\map\components\shipInfoCard.vue
  * @Description: 
 -->
 <template>
   <v-card ref="shipInfo">
-    <v-card-title primary-title>
+    <!-- <v-card-title primary-title>
       <div v-if="shipInfo.properties">
         {{shipInfo.properties.mmsi}}
       </div>
-    </v-card-title>
+    </v-card-title> -->
+    <v-toolbar dense flat>
+      <div v-if="shipInfo.properties">
+        {{shipInfo.properties.mmsi}}
+      </div>
+      <v-spacer></v-spacer>
+      123
+      <!-- <v-btn>
+        <v-icon>
+
+        </v-icon>
+      </v-btn> -->
+    </v-toolbar>
     <v-card-text>
       
     </v-card-text>
