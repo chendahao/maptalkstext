@@ -1,7 +1,7 @@
 /*
  * @Author: chenhao
  * @Date: 2022-10-11 15:33:42
- * @LastEditTime: 2022-10-18 09:39:56
+ * @LastEditTime: 2022-11-07 11:36:42
  * @FilePath: \maptalkstext\src\plugins\vuetify.ts
  * @Description: 
  */
@@ -12,28 +12,15 @@ import type { VuetifyParsedTheme } from 'vuetify/types/services/theme';
 import Vuetify from 'vuetify/lib/framework';
 import Vue from 'vue';
 
-/*
-// Locale
-import i18n from './i18n';
-import { en, ja } from 'vuetify/lib/locale';
-*/
-
 import '@mdi/font/css/materialdesignicons.css';
 import { loadFonts } from './webfontloader';
 
-loadFonts();
+// loadFonts();
 
 export default createVuetify({
   icons: {
     iconfont: 'mdi',
   },
-  /*
-  lang: {
-    current: navigator.language,
-    locales: { ja, en },
-    t: (key, ...params) => i18n.t(key, params) as string,
-  },
-*/
   theme: {
     options: {
       themeCache: {

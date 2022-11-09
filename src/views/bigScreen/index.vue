@@ -1,7 +1,7 @@
 <!--
  * @Author: chenhao
  * @Date: 2022-10-17 11:57:57
- * @LastEditTime: 2022-10-18 11:38:43
+ * @LastEditTime: 2022-11-07 15:58:52
  * @FilePath: \maptalkstext\src\views\bigScreen\index.vue
  * @Description: 
 -->
@@ -64,7 +64,7 @@
 				<div class="col col-c">
 					<div class="xpanel-wrapper xpanel-wrapper-75">
 						<div class="xpanel no-bg">
-							<map-page />
+							<map-page style="width:100%"/>
 						</div>
 					</div>
 					<div class="xpanel-wrapper xpanel-wrapper-25">
@@ -106,7 +106,7 @@
 
 <script>
 import * as echarts from 'echarts';
-import mapPage from '../map/map.vue'
+import mapPage from './map/index.vue'
 var wchart = ''
 export default {
 	components:{

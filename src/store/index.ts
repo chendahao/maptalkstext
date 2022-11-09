@@ -11,6 +11,8 @@ import VuexPersistence from 'vuex-persist';
 // Modules
 import ConfigModule from './ConfigModule';
 import MapModule from './MapModule';
+import userinfo from './userinfo';
+import shipList from './shipList';
 
 /** Root State Interface */
 export interface RootState {
@@ -140,7 +142,9 @@ const store: StoreOptions<RootState> = {
   actions,
   modules: {
     ConfigModule,
-    MapModule
+    MapModule,
+    // userinfo,
+    shipList
   },
   plugins: [
     new VuexPersistence({

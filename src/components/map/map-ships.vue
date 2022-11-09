@@ -1,8 +1,8 @@
 <!--
  * @Author: chenhao
  * @Date: 2022-11-04 09:50:37
- * @LastEditTime: 2022-11-04 17:22:54
- * @FilePath: \maptalkstext\src\views\map\components\map-ships.vue
+ * @LastEditTime: 2022-11-09 17:55:43
+ * @FilePath: \maptalkstext\src\components\map\map-ships.vue
  * @Description: 
 -->
 <template>
@@ -33,31 +33,52 @@ export default {
   },
   computed: {
     ...mapGetters({
-      map: 'MapModule/map'
-    })
+      map: 'MapModule/map',
+      shipList: 'shipList/shipList'
+    }),
+
   },
   mounted() {
     this.$nextTick(() => {
       this.getShips()
     })
   },
+  watch: {
+    shipList(val) {
+      this.getShips()
+    }
+  },
   methods: {
     getShips() {
       let mapObj = this.map
-      const list =  ships
+      const list =  this.shipList
+      
+      console.log(list)
+      if (list.length <= 0) return
       const that = this
-      console.log(mapObj)
       var layer = mapObj.getOrCreateLayerById('船舶', {})
       list.forEach(element => {
         const mmsi = element.properties.mmsi
+        const name = element.name || element.properties.mmsi
+        const fontWidth = name.length
         let shipStyle = 'shipItem'
         if (that.activeShip && thta.activeShip === mmsi) shipStyle = 'activeShip'
+        const color = '#5BF709'
         var marker = new maptalks.ui.UIMarker(element.geometry.coordinates, {
           pitchWithMap: true,
           rotateWithMap: true,
-          content: `<div id="${mmsi}" class="${shipStyle}" title="${mmsi}" style="transform:rotate(${element.properties.heading}deg)">
-            <img src='/src/assets/ship.png' style="width:100%;height:100%" >
-            </div>`
+          //            // <img src='/src/assets/ship.png' style="width:100%;height:100%" >
+          content: `<div id="${mmsi}" class="${shipStyle}" title="${name}">
+            <div style="background-color: #f0f0f0; margin-top:-30px; height: 17px; width:${fontWidth * 8 + 10}px; position:absolute;font-size: 13px;">
+              ${name}
+            </div>
+            <div style="width: 25px;height:5px;margin-top:96px; border-bottom:1px solid #000;transform: rotate( 105deg);"></div>
+            <svg width="15" height="30" style="transform:rotate(${element.properties.heading}deg)">
+              <g>
+                <path xmlns="http://www.w3.org/2000/svg" d="m0.782406,29.604881l6.709559,-29.044118l6.709559,29.044118l-13.419118,0z" style="fill:#5BF709;stroke: #000000;stroke-width:1" />
+              </g>
+            </svg>
+          </div>`
         })
         .addTo(layer);
         marker.on('click', function (param){
@@ -69,11 +90,14 @@ export default {
     getShipInfo(element) {
       return element
     },
+    getShipColor() {
+
+    },
     // 船舶的点击事件
     showShipInfo(type, param, element) {
       if (this.activeShip) document.getElementById(this.activeShip).className = 'shipItem'
       this.shipInfo = this.getShipInfo(element)
-      this.activeShip = element.properties.mmsi
+      this.activeShip = element.mmsi
       document.getElementById(this.activeShip).className = 'activeShip'
       // this.map.setCenter(param.coordinate)
       this.showShipInfoCard = true

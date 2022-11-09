@@ -1,13 +1,13 @@
 <!--
  * @Author: chenhao
  * @Date: 2022-11-02 10:14:11
- * @LastEditTime: 2022-11-04 16:06:12
- * @FilePath: \maptalkstext\src\views\map\components\map-compass.vue
+ * @LastEditTime: 2022-11-07 15:32:38
+ * @FilePath: \maptalkstext\src\components\map\map-compass.vue
  * @Description: 
 -->
 <template>
   <div class="compass" @click="returnNorth" title="回到正北方向">
-    <img id="compass" src="../../../assets/指北针.png" />
+    <img id="compass" src="../../assets/指北针.png" />
   </div>
 </template>
 <script>

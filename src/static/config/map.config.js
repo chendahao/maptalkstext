@@ -1,4 +1,5 @@
 // import symbols from './symbol.config'
+import proj4 from 'proj4/dist/proj4'
   /**
      * 地图（天地图）配置文件
      */
@@ -90,9 +91,43 @@
       spatialReference:{
         projection:'EPSG:3857'
       }
-    }
+    },
+    {
+      visible: false,
+      id: '船讯网海图',
+      name: '船讯网海图',
+      layerType: 'TileLayer',
+      // tileSystem : [-180.0, -80.0, 180.0, 84.0], // tile system
+      urlTemplate: '/shipxy/tile.c?l=Na&m=o&x={x}&y={y}&z={z}',
+      spatialReference: {
+        projection: projection,
+      },
+      crs: 'EPSG:3395'
+    },
   ]
 
+  var proj3395 = '+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs'
+  var proj = proj4('EPSG:3857', proj3395);
+
+  // define a custom projection object
+  var projection = {
+    code : 'EPSG:3395',  // code of the projection
+
+    project : function (c) { // from 3857 to 3395
+      var pc = proj.forward(c.toArray());
+      return new maptalks.Coordinate(pc);
+    },
+
+    unproject : function (pc) { // from 3395 to 3857
+      var c = proj.inverse(pc.toArray());
+      return new maptalks.Coordinate(c);
+    },
+
+    // tell projection how to measure
+    // for cartesian coordinates change this to:
+    measure: 'identity'
+    // measure: 'EPSG:4326'
+  };
   // ----------------------通用部分----------------------------
   var layers = [{
       id: 'label_layer',

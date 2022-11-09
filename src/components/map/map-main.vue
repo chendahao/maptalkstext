@@ -1,8 +1,8 @@
 <!--
  * @Author: chenhao
  * @Date: 2022-11-02 11:40:23
- * @LastEditTime: 2022-11-04 17:17:43
- * @FilePath: \maptalkstext\src\views\map\components\map-main.vue
+ * @LastEditTime: 2022-11-09 09:53:25
+ * @FilePath: \maptalkstext\src\components\map\map-main.vue
  * @Description: 
 -->
 <template>
@@ -10,23 +10,23 @@
   </div>
 </template>
 <script>
-import * as THREE from 'three';
-import { ThreeLayer } from 'maptalks.three';
-// import coordinates from './coordiantes.json'
-// import ShipInfoCard from './components/shipInfoCard.vue'
-// import MapComapss from './components/compass.vue'
-// import ship from '@/assets/ship.png'
-// import ships from './shipMock.json'
 import Vue from 'vue'
 import * as maptalks from 'maptalks'
 import common from '@/utils/common.es'
 import { mapGetters } from 'vuex'
 
 export default {
+  prop: {
+    showMousePosition: {
+      type: Boolean,
+      default: true
+    }
+  },
   computed: {
     ...mapGetters({
       configLoaded: 'MapModule/configLoaded',
-      mapConfig: 'MapModule/mapConfig'
+      mapConfig: 'MapModule/mapConfig',
+      map: 'MapModule/map'
     })
   },
   watch: {
@@ -42,8 +42,18 @@ export default {
       this.configLoaded && this.initMap()
     })
   },
+  beforeDestroy() {
+    // if (this.map) {
+    //   this.map.getInstance().remove()
+    // }
+  },
   methods: {
     initMap () {
+      if (this.map) {
+        this.map.getInstance().remove()
+      }
+      // this.$store.dispatch('setError', '请求出错')
+      this.mapConfig.showMousePosition = this.showMousePosition
       const initConfig = this.mapConfig
       let baseLayers = []
       let layers = []
@@ -314,7 +324,9 @@ function addMapLinstener (config) {
         // }
         break
       case 'mousemove':
-        document.getElementById('mouse-position1').innerHTML = param.coordinate.toFixed(5).toArray()[0] + '<br/>' + param.coordinate.toFixed(5).toArray()[1]
+        if (!config.showMousePosition) {
+          document.getElementById('mouse-position1').innerHTML = param.coordinate.toFixed(5).toArray()[0] + '<br/>' + param.coordinate.toFixed(5).toArray()[1]
+        }
         processClick(param)
         break
       case 'rotate':

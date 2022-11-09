@@ -1,7 +1,7 @@
 <!--
  * @Author: chenhao
  * @Date: 2022-10-11 16:13:58
- * @LastEditTime: 2022-11-04 17:15:26
+ * @LastEditTime: 2022-11-07 16:43:26
  * @FilePath: \maptalkstext\src\views\map\map.vue
  * @Description: 
 -->
@@ -12,6 +12,7 @@
     <map-Ships></map-Ships>
     <map-area></map-area>
     <map-bridge></map-bridge>
+    <map-Animation></map-Animation>
     <!-- <ship-Info-Card
       v-on:close="closeShipInfo"
       v-on:lockBearing="lockBearing"
@@ -34,16 +35,14 @@
 </template>
 
 <script>
-import * as THREE from 'three';
 // import * as maptalks from 'maptalks'
-import { ThreeLayer } from 'maptalks.three';
-import MapMain from './components/map-main.vue'
-import ShipInfoCard from './components/shipInfoCard.vue'
-import MapComapss from './components/map-compass.vue'
-import MapShips from './components/map-ships.vue'
-import MapArea from './components/map-area.vue'
-import MapBridge from './components/map-bridge.vue'
-import ship from '@/assets/ship.png'
+import MapMain from '@/components/map/map-main.vue'
+import ShipInfoCard from '@/components/map/shipInfoCard.vue'
+import MapComapss from '@/components/map/map-compass.vue'
+import MapShips from '@/components/map/map-ships.vue'
+import MapArea from '@/components/map/map-area.vue'
+import MapBridge from '@/components/map/map-bridge.vue'
+import MapAnimation from '@/components/map/map-animation.vue'
 // import ships from './components/shipMock.json'
 export default {
   components: {
@@ -52,7 +51,8 @@ export default {
     // ShipInfoCard,
     MapComapss,
     MapArea,
-    MapBridge
+    MapBridge,
+    MapAnimation
   },
   data() {
     return {

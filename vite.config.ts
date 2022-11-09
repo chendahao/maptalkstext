@@ -8,6 +8,8 @@ import checker from 'vite-plugin-checker';
 import fs from 'fs';
 import vue from '@vitejs/plugin-vue2';
 
+const seachart_server_Url = 'http://192.168.1.23:8008';
+
 /**
  * Vite Configure
  *
@@ -30,6 +32,16 @@ export default defineConfig(async ({ command, mode }): Promise<UserConfig> => {
         // Allow serving files from one level up to the project root
         allow: ['..'],
       },
+      proxy: {
+        '/shipxy': {
+          target: 'http://m12.shipxy.com/',
+          changeOrigin: true
+        },
+        '/api': {
+          target: seachart_server_Url,
+          changeOrigin: true
+        },
+      }
     },
     plugins: [
       // Vue2
