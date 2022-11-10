@@ -1,7 +1,7 @@
 /*
  * @Author: chenhao
  * @Date: 2022-10-11 15:33:42
- * @LastEditTime: 2022-11-08 16:45:02
+ * @LastEditTime: 2022-11-10 17:18:40
  * @FilePath: \maptalkstext\src\main.ts
  * @Description: 
  */
@@ -14,6 +14,7 @@ import axios from './plugins/axios'
 import vuetify from './plugins/vuetify';
 import teleport from 'vue2-teleport';
 import storagedata from '@/utils/storagedata'
+import './plugins/eventBus'
 
 import 'maptalks/dist/maptalks.css';
 

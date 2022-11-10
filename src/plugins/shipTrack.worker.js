@@ -1,7 +1,7 @@
 /*
  * @Author: chenhao
  * @Date: 2022-11-08 10:42:44
- * @LastEditTime: 2022-11-08 11:33:52
+ * @LastEditTime: 2022-11-10 15:05:31
  * @FilePath: \maptalkstext\src\plugins\shipTrack.worker.js
  * @Description: 
  */
@@ -40,10 +40,12 @@ const createShipTrackHub = function (url) {
         .build();
 
     hub.on('shipTrack', async feature => {
+        console.log('shipTrack', feature)
         self.postMessage({ type: 'shipTrack', data: feature });
     });
 
     hub.on("ShipInfo", e => {
+        console.log('ShipInfo', e)
         //不需要处理 shipInfo
         self.postMessage({ type: 'shipInfo', data: e });
     })
@@ -51,12 +53,15 @@ const createShipTrackHub = function (url) {
     hub.on('TrackEvent', async e => {
         switch (e.event) {
             case 1:// 进入辖区 EnterPopedom = 0x1,
+                console.log('TrackEvent', 1, e)
                 self.postMessage({ type: 'EnterPopedom', data: toFeature(e.body) });
                 break;
             case 2: // 离开辖区 LeavePopedom = 0x2,
+                console.log('TrackEvent', 2, e)
                 self.postMessage({ type: 'LeavePopedom', data: toFeature(e.body) });
                 break;
             case 3: // AIS 信号灭失  SignalLost = -1
+                console.log('TrackEvent', 3, e)
                 self.postMessage({ type: 'SignalLost', data: toFeature(e.body) });
                 break;
         }

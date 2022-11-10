@@ -1,8 +1,8 @@
 <!--
  * @Author: chenhao
  * @Date: 2022-10-27 10:26:43
- * @LastEditTime: 2022-10-28 12:00:56
- * @FilePath: \maptalkstext\src\views\map\components\shipInfoCard.vue
+ * @LastEditTime: 2022-11-10 14:48:04
+ * @FilePath: \maptalkstext\src\components\map\shipInfoCard.vue
  * @Description: 
 -->
 <template>
@@ -25,7 +25,7 @@
       </v-btn> -->
     </v-toolbar>
     <v-card-text>
-      
+      <slot></slot>
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>

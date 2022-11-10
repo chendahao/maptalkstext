@@ -41,6 +41,11 @@ export default defineConfig(async ({ command, mode }): Promise<UserConfig> => {
           target: seachart_server_Url,
           changeOrigin: true
         },
+        '/ws': {
+          target: 'http://192.168.1.23',
+          ws: true,
+          changeOrigin: true
+        },
       }
     },
     plugins: [

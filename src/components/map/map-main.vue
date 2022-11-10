@@ -1,7 +1,7 @@
 <!--
  * @Author: chenhao
  * @Date: 2022-11-02 11:40:23
- * @LastEditTime: 2022-11-09 09:53:25
+ * @LastEditTime: 2022-11-10 14:41:22
  * @FilePath: \maptalkstext\src\components\map\map-main.vue
  * @Description: 
 -->
@@ -132,6 +132,11 @@ export default {
         clearLayerById (layerId) {
           let lyr = myMap.getLayer(layerId)
           lyr && lyr.clear()
+        },
+        // 删除图层
+        removeLayerById (layerId) {
+          let lyr = myMap.getLayer(layerId)
+          lyr && lyr.remove()
         },
         // 获取图层，没有则创建
         getOrCreateLayerById (layerId, options = {}) {
