@@ -1,7 +1,7 @@
 <!--
  * @Author: chenhao
  * @Date: 2022-10-11 16:13:58
- * @LastEditTime: 2022-11-07 16:43:26
+ * @LastEditTime: 2022-11-12 17:08:04
  * @FilePath: \maptalkstext\src\views\map\map.vue
  * @Description: 
 -->
@@ -13,6 +13,7 @@
     <map-area></map-area>
     <map-bridge></map-bridge>
     <map-Animation></map-Animation>
+    <map-tool></map-tool>
     <!-- <ship-Info-Card
       v-on:close="closeShipInfo"
       v-on:lockBearing="lockBearing"
@@ -37,22 +38,22 @@
 <script>
 // import * as maptalks from 'maptalks'
 import MapMain from '@/components/map/map-main.vue'
-import ShipInfoCard from '@/components/map/shipInfoCard.vue'
 import MapComapss from '@/components/map/map-compass.vue'
 import MapShips from '@/components/map/map-ships.vue'
 import MapArea from '@/components/map/map-area.vue'
 import MapBridge from '@/components/map/map-bridge.vue'
 import MapAnimation from '@/components/map/map-animation.vue'
+import MapTool from '@/components/map/map-tool.vue'
 // import ships from './components/shipMock.json'
 export default {
   components: {
     MapMain,
     MapShips,
-    // ShipInfoCard,
     MapComapss,
     MapArea,
     MapBridge,
-    MapAnimation
+    MapAnimation,
+    MapTool
   },
   data() {
     return {

@@ -1,8 +1,8 @@
 <!--
  * @Author: chenhao
  * @Date: 2022-11-04 11:38:42
- * @LastEditTime: 2022-11-04 17:18:07
- * @FilePath: \maptalkstext\src\views\map\components\map-area.vue
+ * @LastEditTime: 2022-11-12 20:00:01
+ * @FilePath: \maptalkstext\src\components\map\map-area.vue
  * @Description: 
 -->
 <template>
@@ -28,6 +28,7 @@ export default {
       var rect = new maptalks.Rectangle(
         [117.63918174165794,39.0133457806687], 2250, 800,
         {
+          id: '感知区',
           symbol:{
             'polygonFill' : '#1bbc9b22',
             'polygonOpacity' : 1,
@@ -74,6 +75,7 @@ export default {
           ]
         ],
         {
+          id: 'safe',
           symbol:{
             'lineColor': '#0bfF0b66',
             'lineWidth': 2,
@@ -112,6 +114,7 @@ export default {
           ]
         ],
         {
+          id: 'warning1',
           symbol:[
             {
               'lineColor': '#FFfF0b36',
@@ -152,6 +155,7 @@ export default {
           ]
         ],
         {
+          id: 'warning2',
           symbol:[
             {
               'lineColor': '#FFfF0b36',
@@ -192,6 +196,7 @@ export default {
           ]
         ],
         {
+          id: 'warning3',
           symbol:[
             {
               'lineColor': '#FFfF0b36',
@@ -232,6 +237,7 @@ export default {
           ]
         ],
         {
+          id: 'warning4',
           symbol:[
             {
               'lineColor': '#FFfF0b36',
@@ -272,6 +278,7 @@ export default {
           ]
         ],
         {
+          id: 'danger1',
           symbol:[
             {
               'lineColor': '#FF330b36',
@@ -312,6 +319,7 @@ export default {
           ]
         ],
         {
+          id: 'danger2',
           symbol:[
             {
               'lineColor': '#FF330b36',

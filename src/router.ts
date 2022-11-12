@@ -1,7 +1,7 @@
 /*
  * @Author: chenhao
  * @Date: 2022-10-11 15:33:42
- * @LastEditTime: 2022-11-07 11:53:50
+ * @LastEditTime: 2022-11-12 16:54:01
  * @FilePath: \maptalkstext\src\router.ts
  * @Description: 
  */
@@ -66,6 +66,42 @@ const routes: RouteRecordRaw[] = [
         path: '/bigScreen',
         name: 'bigScreen',
         component: () => import('@/views/bigScreen/index.vue'),
+        meta: {
+          needLogin: true,
+          layout: false
+        }
+      },
+      {
+        path: '/area',
+        name: 'areaIndex',
+        component: () => import('@/views/warnArea/index.vue'),
+        meta: {
+          needLogin: true,
+          layout: false
+        }
+      },
+      {
+        path: '/area/add',
+        name: 'areaAdd',
+        component: () => import('@/views/warnArea/add.vue'),
+        meta: {
+          needLogin: true,
+          layout: false
+        }
+      },
+      {
+        path: '/area/preview',
+        name: 'areaPreview',
+        component: () => import('@/views/warnArea/preview.vue'),
+        meta: {
+          needLogin: true,
+          layout: false
+        }
+      },
+      {
+        path: '/area/edit',
+        name: 'areaEdit',
+        component: () => import('@/views/warnArea/edit.vue'),
         meta: {
           needLogin: true,
           layout: false

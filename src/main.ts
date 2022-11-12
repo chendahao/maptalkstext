@@ -1,7 +1,7 @@
 /*
  * @Author: chenhao
  * @Date: 2022-10-11 15:33:42
- * @LastEditTime: 2022-11-10 17:18:40
+ * @LastEditTime: 2022-11-12 22:29:17
  * @FilePath: \maptalkstext\src\main.ts
  * @Description: 
  */
@@ -17,6 +17,7 @@ import storagedata from '@/utils/storagedata'
 import './plugins/eventBus'
 
 import 'maptalks/dist/maptalks.css';
+import 'element-ui/lib/theme-chalk/index.css'
 
 import App from '@/App.vue';
 

@@ -1,7 +1,7 @@
 <!--
  * @Author: chenhao
  * @Date: 2022-11-04 09:50:37
- * @LastEditTime: 2022-11-10 18:07:31
+ * @LastEditTime: 2022-11-12 16:50:35
  * @FilePath: \maptalkstext\src\components\map\map-ships.vue
  * @Description: 
 -->
@@ -13,12 +13,13 @@
     v-show="showShipInfoCard"
     class="shipInfoCard"
   >
-    <v-btn color="success" @click="cleaarGeom">clear</v-btn>
+    <v-btn color="success" @click="cleaarGeom">移动位置测试</v-btn>
+    <v-btn color="success" @click="cleaarItem">清除测试</v-btn>
+    <v-btn color="success" @click="cleaarGeom">移动位置测试</v-btn>
   </ship-Info-Card>
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import ships from './shipMock.json'
 import * as maptalks from 'maptalks'
 import ShipInfoCard from './shipInfoCard.vue'
 export default {
@@ -41,7 +42,6 @@ export default {
       map: 'MapModule/map',
       shipList: 'shipList/shipList'
     }),
-
   },
   mounted() {
     this.$nextTick(() => {
@@ -52,9 +52,9 @@ export default {
     })
   },
   watch: {
-    // shipList(val) {
-    //   this.initShips()
-    // }
+    shipList(val) {
+      this.initShips()
+    }
   },
   methods: {
     // 初次加载船舶
@@ -108,6 +108,9 @@ export default {
         });
       });
       this.ready = true
+    },
+    cleaarItem() {
+      this.markerList[1].remove()
     },
     // 测试用方法
     cleaarGeom() {
@@ -164,6 +167,10 @@ export default {
       // mapObj.setZoom(16)
       mapObj.setBearing(info.properties.heading)
       mapObj.panTo(info.geometry.coordinates)
+      // 这里需要关联指北针
+      let ele = document.getElementById("compass");
+      // 设置度数
+      ele.style.transform = "rotate(" + info.geometry.coordinates + "deg)";
     }
   }
 }

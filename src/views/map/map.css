@@ -3,9 +3,14 @@
   #coordinate{position:fixed;left:0px;top:0px;width:100%;height:95px;overflow:hidden}
   #coordinate div{background-color:rgba(13, 13, 13, 0.5);width:100%;height:100%;padding:10px 10px 10px 10px;font:13px bold sans-serif;color:#fff}
 
+  /* 图层切换工具 */
   .maptalks-layer-switcher {
+    position: absolute;
+    top: 55px;
+    right: 1%;
     z-index:999;
   } 
+  /* 鼠标坐标 */
   #mouse-position {
     background-color: rgba(255, 255, 255, 0.7);
     text-align: right;
@@ -18,7 +23,9 @@
     left: 18px;
     color: #000;
   }
+  /* 指北针 */
   .compass {
+    cursor: pointer;
     position: absolute;
     /* background-color: rgba(255, 255, 255, 0.5); */
     /* box-shadow: 0 2px 2px rgb(0 0 0 / 25%); */
@@ -28,6 +35,23 @@
     height: 88px;
     z-index: 1;
   }
+  .compass img {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* 地图测量工具 */
+  .map-tool {
+    cursor: pointer;
+    position: absolute;
+    top: 100px;
+    right: 1%;
+    width: 29px;
+    height: 62px;
+    z-index: 0;
+  }
+
+  /* 点击船舶弹出的船舶信息卡片 */
   .shipInfoCard {
     position: absolute;
     top: 2%;
@@ -36,10 +60,8 @@
     height: 300px;
     z-index: 1;
   }
-  .compass img {
-    width: 100%;
-    height: 100%;
-  }
+
+  /* 海图中的船舶 */
   .shipItem {
     position:relative;
     cursor: pointer;
@@ -47,6 +69,7 @@
     width:15px;
     height: 30px;
   }
+  /* 激活的船舶 */
   .activeShip {
     cursor: pointer;
     margin-left: -2px;

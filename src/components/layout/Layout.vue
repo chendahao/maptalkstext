@@ -53,6 +53,14 @@
               <v-list-item-title>监控大屏</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+          <v-list-item :to="{ name: 'areaIndex' }">
+            <v-list-item-icon>
+              <v-icon>mdi-information</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>区域管理</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
         </v-list>
       </v-navigation-drawer>
   

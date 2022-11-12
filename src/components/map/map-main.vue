@@ -1,7 +1,7 @@
 <!--
  * @Author: chenhao
  * @Date: 2022-11-02 11:40:23
- * @LastEditTime: 2022-11-10 14:41:22
+ * @LastEditTime: 2022-11-12 17:35:32
  * @FilePath: \maptalkstext\src\components\map\map-main.vue
  * @Description: 
 -->
@@ -52,6 +52,7 @@ export default {
       if (this.map) {
         this.map.getInstance().remove()
       }
+      console.log('initMpa')
       // this.$store.dispatch('setError', '请求出错')
       this.mapConfig.showMousePosition = this.showMousePosition
       const initConfig = this.mapConfig
@@ -329,8 +330,9 @@ function addMapLinstener (config) {
         // }
         break
       case 'mousemove':
-        if (!config.showMousePosition) {
-          document.getElementById('mouse-position1').innerHTML = param.coordinate.toFixed(5).toArray()[0] + '<br/>' + param.coordinate.toFixed(5).toArray()[1]
+        let c = document.getElementById('mouse-position1')
+        if (c) {
+          c.innerHTML = param.coordinate.toFixed(5).toArray()[0] + '<br/>' + param.coordinate.toFixed(5).toArray()[1]
         }
         processClick(param)
         break
@@ -347,7 +349,9 @@ function addMapLinstener (config) {
         // 获取元素 ———— 指北针图标的ID
         let ele = document.getElementById("compass");
         // 设置度数
-        ele.style.transform = "rotate(" + angle + "deg)";
+        if (ele) {
+          ele.style.transform = "rotate(" + angle + "deg)";
+        }
         break
     }
   })
