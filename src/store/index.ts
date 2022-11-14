@@ -13,7 +13,7 @@ import ConfigModule from './ConfigModule';
 import MapModule from './MapModule';
 import userinfo from './userinfo';
 import shipList from './shipList';
-import { shipTrackHub } from '@/plugins/signalr.host'
+// import { shipTrackHub } from '@/plugins/signalr.host'
 
 /** Root State Interface */
 export interface RootState {
@@ -153,7 +153,7 @@ const store: StoreOptions<RootState> = {
       storage: window.localStorage,
       modules: ['ConfigModule'],
     }).plugin,
-    shipTrackHub
+    // shipTrackHub
     /*
     // store as session storage
     new VuexPersistence({

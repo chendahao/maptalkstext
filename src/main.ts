@@ -16,8 +16,8 @@ import teleport from 'vue2-teleport';
 import storagedata from '@/utils/storagedata'
 import './plugins/eventBus'
 
+import './plugins/elementui' // 引入elementUI message
 import 'maptalks/dist/maptalks.css';
-import 'element-ui/lib/theme-chalk/index.css'
 
 import App from '@/App.vue';
 

@@ -7,33 +7,45 @@
 				<span class="close" @click="close">x</span>
 			</header>
 			<main>
-				<div class="l-h" v-show="item.type!=='label'">
-					<label>线宽：</label>
-					<el-input-number v-model="numSize" @change="handleSizeChange" :min="1" :max="10" size="small"></el-input-number>
+        <div class="l-h">
+					<label>名称：</label>
+					<el-input v-model="symbol.name" @change="callback('name', name)" style="width:220px" size="small"></el-input>
 				</div>
-				<div class="l-h" v-show="item.type!=='label'">
-					<label>线颜色：</label>
-					<el-color-picker v-model="colorLine" @change="handleColorLineChange"></el-color-picker>
+        <div class="l-h">
+					<label>描述：</label>
+					<el-input v-model="symbol.description" @change="callback('description', description)" style="width:220px" size="small"></el-input>
 				</div>
-				<div class="l-h" v-show="item.type==='label'">
+        <div class="l-h">
+					<label>标签：</label>
+					<el-input v-model="symbol.tag" @change="callback('tag', tag)" style="width:220px" size="small"></el-input>
+				</div>
+        <div class="l-h">
+					<label>显示名称：</label>
+					<el-input v-model="symbol.textName" @change="callback('textName', textName)" style="width:188px" size="small"></el-input>
+				</div>
+        <div class="l-h">
 					<label>字体大小：</label>
-					<el-input-number v-model="fontSize" @change="handleFontSizeChange" :min="12" :max="30" size="small"></el-input-number>
+					<el-input-number v-model="symbol.textSize" @change="callback('textSize', textSize)" :min="1" :max="40" size="small"></el-input-number>
 				</div>
-				<div class="l-h" v-show="item.type==='label'">
-					<label>字体颜色：</label>
-					<el-color-picker v-model="fontColor" @change="handleFontColorChange"></el-color-picker>
+				<div class="l-h" v-show="item.type=='polygon'">
+					<label>线宽：</label>
+					<el-input-number v-model="symbol.lineWidth" @change="callback('lineWidth', lineWidth)" :min="1" :max="10" size="small"></el-input-number>
 				</div>
-				<div class="l-h" v-show="item.type==='label'">
-					<label>字体背景：</label>
-					<el-color-picker v-model="fontFrameColor" @change="handleFontFrameColorChange"></el-color-picker>
+				<div class="l-h" v-show="item.type=='polygon'">
+					<label>线颜色：</label>
+					<el-color-picker v-model="symbol.lineColor" @change="callback('lineColor', lineColor)" ></el-color-picker>
+				</div>
+        <div class="l-h" v-show="item.type==='polygon'">
+					<label>线透明度：</label>
+					<el-input-number v-model="symbol.lineOpacity" @change="callback('lineOpacity', lineOpacity)" :min="0.1" :max="1.0" :precision="1" :step="0.1" size="small"></el-input-number>
 				</div>
 				<div class="l-h" v-show="item.type==='polygon'">
 					<label>填充颜色：</label>
-					<el-color-picker v-model="colorPolygon" @change="handleColorPolygonChange"></el-color-picker>
+					<el-color-picker v-model="symbol.polygonFill" @change="callback('polygonFill', polygonFill)" ></el-color-picker>
 				</div>
 				<div class="l-h" v-show="item.type==='polygon'">
 					<label>填充透明度：</label>
-					<el-input-number v-model="alphaSize" @change="handleAlphaChange" :min="0.1" :max="1.0" :precision="1" :step="0.1" size="small"></el-input-number>
+					<el-input-number v-model="symbol.polygonOpacity" @change="callback('polygonOpacity', polygonOpacity)" :min="0.1" :max="1.0" :precision="1" :step="0.1" size="small"></el-input-number>
 				</div>
 			</main>
 		</div>
@@ -42,31 +54,55 @@
 
 <script>
 import MapDrag from '@/components/map/map-drag.vue'
-import Vue from 'vue'
-import {
-  InputNumber,
-  ColorPicker,
-  Button
-} from 'element-ui'
-Vue.use(InputNumber)
-Vue.use(ColorPicker)
-Vue.use(Button)
 
 export default {
   components: {
     MapDrag
   },
+  data () {
+    return {
+      symbol: {
+        name: '',
+        description: '',
+        tag: '',
+        textName: '',
+        textSize: 12,
+        lineWidth: 1,
+        lineColor: '#409EFF',
+        lineOpacity: 1,
+        polygonOpacity: 0.1,
+        polygonFill: '#409EFF',
+      },
+      name: '',
+      description: '',
+      tag: '',
+      textName: '',
+      textSize: 12,
+      lineWidth: 1,
+      lineColor: '#409EFF',
+      lineOpacity: 1,
+      polygonOpacity: 0.1,
+      polygonFill: '#409EFF',
+      item: {},
+      isShow: false,
+      styleP: {
+        top: '130px',
+        left: '450px'
+      }
+    }
+  },
   methods: {
     open (item) {
       console.log(item)
       this.item = item
+      this.symbol = item.geo.getSymbol()
+      console.log(this.symbol)
       this.isShow = true
       let xy = item.xy
       this.styleP = {
         top: `${xy.y}px`,
         left: `${xy.x}px`
       }
-      console.log('it:22222 ')
     },
     close () {
       this.isShow = false
@@ -77,9 +113,34 @@ export default {
       geo.setSymbol(newSymbol)
     },
     callback (type, value) {
-      let symbol = {}
+      let symbol = this.symbol
       switch (type) {
-        case 'lineSize':
+        case 'name':
+          symbol = {
+            name: value
+          }
+          break
+        case 'description':
+          symbol = {
+            description: value
+          }
+          break
+        case 'tag':
+          symbol = {
+            tag: value
+          }
+          break
+        case 'textName':
+          symbol = {
+            textName: value
+          }
+          break
+        case 'textSize':
+          symbol = {
+            textSize: value
+          }
+          break
+        case 'lineWidth':
           symbol = {
             lineWidth: value
           }
@@ -89,19 +150,19 @@ export default {
             lineColor: value
           }
           break
-        case 'polygonAlpha':
+        case 'lineOpacity':
+          symbol = {
+            lineOpacity: value
+          }
+          break
+        case 'polygonOpacity':
           symbol = {
             polygonOpacity: value
           }
           break
-        case 'polygonColor':
+        case 'polygonFill':
           symbol = {
             polygonFill: value
-          }
-          break
-        case 'fontColor':
-          symbol = {
-            textFill: value
           }
           break
         case 'fontFrameColor':
@@ -109,7 +170,7 @@ export default {
             markerFill: value
           }
           break
-        case 'fontSize':
+        case 'textSize':
           symbol = {
             textSize: value
           }
@@ -118,50 +179,28 @@ export default {
       this.setSymbol(this.item.geo, symbol)
     },
     // 线宽
-    handleSizeChange (value) {
-      this.callback('lineSize', value)
+    handleWidthChange (value) {
+      this.callback('lineWidth', value)
+    },
+    handletextSizeChange (value) {
+      this.callback('textSize', value)
     },
     // 线颜色：
-    handleColorLineChange (value) {
+    handlelineColorChange (value) {
       this.callback('lineColor', value)
     },
+    // 线的透明度
+    handleLineAlphaChange (value) {
+      this.callback('lineOpacity', value)
+    },
     // 透明度
-    handleAlphaChange (value) {
-      this.callback('polygonAlpha', value)
+    handlePolygonOpacity (value) {
+      this.callback('polygonOpacity', value)
     },
     // 填充颜色
-    handleColorPolygonChange (value) {
-      this.callback('polygonColor', value)
+    handlePolygonFillChange (value) {
+      this.callback('polygonFill', value)
     },
-    // 字体颜色
-    handleFontColorChange (value) {
-      this.callback('fontColor', value)
-    },
-    // 字体大小
-    handleFontSizeChange (value) {
-      this.callback('fontSize', value)
-    },
-    // 字体框颜色
-    handleFontFrameColorChange (value) {
-      this.callback('fontFrameColor', value)
-    }
-  },
-  data () {
-    return {
-      numSize: 1,
-      fontSize: 12,
-      alphaSize: 0.1,
-      item: {},
-      isShow: false,
-      colorLine: '#409EFF',
-      colorPolygon: '#409EFF',
-      fontColor: '#409EFF',
-      fontFrameColor: '#409EFF',
-      styleP: {
-        top: '130px',
-        left: '450px'
-      }
-    }
   }
 }
 </script>
@@ -171,7 +210,7 @@ export default {
 }
 .detail-dialog {
 	width: 300px;
-	height: 300px;
+	height: 550px;
 	color: #000;
 	background: #fff;
 	box-shadow: 0 2px 12px 0 rgba(173, 113, 113, 0.4);
@@ -188,6 +227,7 @@ export default {
 	color: #fff;
 	padding-right: 40px;
 	position: relative;
+  cursor: move;
 }
 .close {
 	position: absolute;

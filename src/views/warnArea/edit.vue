@@ -1,7 +1,7 @@
 <!--
  * @Author: chenhao
  * @Date: 2022-11-11 16:45:23
- * @LastEditTime: 2022-11-12 22:26:35
+ * @LastEditTime: 2022-11-14 17:35:07
  * @FilePath: \maptalkstext\src\views\warnArea\edit.vue
  * @Description: 
 -->
@@ -22,6 +22,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import * as maptalks from 'maptalks'
+import Vue from 'vue'
 import MapMain from '@/components/map/map-main.vue'
 import MapArea from '@/components/map/map-area.vue'
 import MapPlotEdit from '@/components/map/map-plot-edit.vue'
@@ -55,16 +56,15 @@ export default {
       AreaLayer = mapObj.getOrCreateLayerById('监控区', {})
       console.log(AreaLayer.getGeometries())
       drawTool = new maptalks.DrawTool({
-        mode: 'Point'
+        mode: 'Polygon',
+        once : true
       }).addTo(mapObj.getInstance()).disable();
 
       drawTool.on('drawend', function (param) {
         // 只有手动添加的时候触发 此方法,编辑不触发
-        console.log(param.geometry);
-        AreaLayer.addGeometry(param.geometry);
+        that.addGeometry(param)
         // 添加一个图形后 禁用工具,防止连续添加
-        drawTool.disable();
-        that.getToolBar()
+        // drawTool.disable();
       });
 
       // let geos =  AreaLayer.getGeometries()
@@ -85,44 +85,75 @@ export default {
       let that = this
       let mapObj = this.map
       toolbar = new maptalks.control.Toolbar({
+        position: {
+          top: 15,
+          right: 50
+        },
         items: [
           {
-            item: 'Eidt',
+            item: '区域列表',
             children: that.getGeometries()
           },
           {
-            item: 'ADD',
+            item: '新增',
             click: function () {
-              drawTool.setMode('Polygon').enable();
+              drawTool.enable();
             }
           },
           {
-            item: 'save',
+            item: '保存',
             click: function () {
               that.saveArea()
             }
+          },{
+            item: 'text',
+            click: function () { 
+              that.test()
+            }
           },
           {
-            item: 'stopDraw',
+            item: '停止绘制',
             click: function () {
               drawTool.disable();
             }
           },
-          {
-            item: 'Clear',
-            click: function () {
-              // AreaLayer.clear()
-            }
-          }
+          // {
+          //   item: 'Clear',
+          //   click: function () {
+          //     AreaLayer.clear()
+          //   }
+          // }
         ]
       }).addTo(mapObj.getInstance());
+    },
+    addGeometry (param) {
+      console.log(param.geometry._coordinates);
+      console.log(param.geometry.getSymbol())
+      let Polygon = new maptalks.Polygon(param.geometry._coordinates, {
+        id: 'newSymbol',
+        symbol: {
+          name: '新增区域',
+          description: '',
+          tag: '',
+          textName: '新增区域',
+          textSize: 12,
+          lineColor: '#000',
+          lineWidth: 2,
+          lineOpacity: 1,
+          polygonFill: '#fff',
+          polygonOpacity: 0.3
+        }
+      })
+      AreaLayer.addGeometry(Polygon);
+      this.getToolBar()
     },
     getGeometries () {
       let that = this
       let geos =  AreaLayer.getGeometries()
       var items = geos.map(function (item) {
+        // console.log(item.getSymbol().name)
         return {
-          item: item.getId(),
+          item: item.getSymbol().name,
           click: function () {
             console.log(that.editItem)
             if (that.editItem) {
@@ -136,6 +167,17 @@ export default {
         };
       });
       return items
+    },
+    test () {
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message('setMessage', '删除成功')
+        }).catch(() => {
+          this.$message('setError', '已取消删除')     
+        });
     },
     startDraw () {
       // https://maptalks.org/examples/cn/interaction/draw-tool/#interaction_draw-tool
@@ -151,10 +193,12 @@ export default {
       drawTool.disable();
     },
     saveArea () {
+      console.log(this.editItem)
       if (this.editItem) {
         this.editItem.endEdit()
         console.log(this.editItem)
         console.log(this.editItem.getSymbol())
+        this.$refs.plotEdit.close()
       }
     },
     redraw () {

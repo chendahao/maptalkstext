@@ -1,7 +1,7 @@
 <!--
  * @Author: chenhao
  * @Date: 2022-11-04 11:38:42
- * @LastEditTime: 2022-11-12 20:00:01
+ * @LastEditTime: 2022-11-14 12:10:00
  * @FilePath: \maptalkstext\src\components\map\map-area.vue
  * @Description: 
 -->
@@ -30,6 +30,7 @@ export default {
         {
           id: '感知区',
           symbol:{
+            'name': '感知区',
             'polygonFill' : '#1bbc9b22',
             'polygonOpacity' : 1,
             'lineColor' : '#1bbc9b44',
@@ -77,6 +78,7 @@ export default {
         {
           id: 'safe',
           symbol:{
+            'name': 'safe',
             'lineColor': '#0bfF0b66',
             'lineWidth': 2,
             'polygonFill': '#0bfF0b',
@@ -115,18 +117,15 @@ export default {
         ],
         {
           id: 'warning1',
-          symbol:[
-            {
-              'lineColor': '#FFfF0b36',
-              'lineWidth': 2,
-              'polygonFill': '#fffF0bD4',
-              'polygonOpacity': 0.6
-            },
-            {
-              'textName' : '危险区',
-              'textSize' : 12
-            }
-          ]
+          symbol: {
+            'name': 'warning1',
+            'lineColor': '#FFfF0b36',
+            'lineWidth': 2,
+            'polygonFill': '#fffF0bD4',
+            'polygonOpacity': 0.6,
+            'textName' : '危险区',
+            'textSize' : 12
+          }
         }
       )
       var warning2 = new maptalks.Polygon(
@@ -156,23 +155,20 @@ export default {
         ],
         {
           id: 'warning2',
-          symbol:[
-            {
-              'lineColor': '#FFfF0b36',
-              'lineWidth': 2,
-              'polygonFill': '#fffF0bD4',
-              'polygonOpacity': 0.6
-            },
-            {
-              'textName' : '危险区',
-              'textSize' : 12
-            }
-          ]
+          symbol: {
+            'name': "warning2",
+            'lineColor': '#FFfF0b36',
+            'lineWidth': 2,
+            'polygonFill': '#fffF0bD4',
+            'polygonOpacity': 0.6,
+            'textName' : '危险区',
+            'textSize' : 12
+          }
         }
       )
       var warning3 = new maptalks.Polygon(
         [
-        [
+          [
             [
               117.64677286148071,
               39.009063535023365
@@ -197,18 +193,15 @@ export default {
         ],
         {
           id: 'warning3',
-          symbol:[
-            {
-              'lineColor': '#FFfF0b36',
-              'lineWidth': 2,
-              'polygonFill': '#fffF0bD4',
-              'polygonOpacity': 0.6
-            },
-            {
-              'textName' : '危险区',
-              'textSize' : 12
-            }
-          ]
+          symbol: {
+            'name': 'warning3',
+            'lineColor': '#FFfF0b36',
+            'lineWidth': 2,
+            'polygonFill': '#fffF0bD4',
+            'polygonOpacity': 0.6,
+            'textName' : '危险区',
+            'textSize' : 12
+          }
         }
       )
       var warning4 = new maptalks.Polygon(
@@ -238,18 +231,15 @@ export default {
         ],
         {
           id: 'warning4',
-          symbol:[
-            {
-              'lineColor': '#FFfF0b36',
-              'lineWidth': 2,
-              'polygonFill': '#fffF0bD4',
-              'polygonOpacity': 0.6
-            },
-            {
-              'textName' : '危险区',
-              'textSize' : 12
-            }
-          ]
+          symbol: {
+            'name': 'warning4',
+            'lineColor': '#FFfF0b36',
+            'lineWidth': 2,
+            'polygonFill': '#fffF0bD4',
+            'polygonOpacity': 0.6,
+            'textName' : '危险区',
+            'textSize' : 12
+          }
         }
       )
       var danger1 = new maptalks.Polygon(
@@ -279,18 +269,15 @@ export default {
         ],
         {
           id: 'danger1',
-          symbol:[
-            {
-              'lineColor': '#FF330b36',
-              'lineWidth': 2,
-              'polygonFill': '#FF330b',
-              'polygonOpacity': 0.6
-            },
-            {
-              'textName' : '禁行区',
-              'textSize' : 10
-            }
-          ]
+          symbol: {
+            'name': 'danger1',
+            'lineColor': '#FF330b36',
+            'lineWidth': 2,
+            'polygonFill': '#FF330b',
+            'polygonOpacity': 0.6,
+            'textName' : '禁行区',
+            'textSize' : 10
+          }
         }
       )
       var danger2 = new maptalks.Polygon(
@@ -320,18 +307,15 @@ export default {
         ],
         {
           id: 'danger2',
-          symbol:[
-            {
-              'lineColor': '#FF330b36',
-              'lineWidth': 2,
-              'polygonFill': '#FF330b',
-              'polygonOpacity': 0.6
-            },
-            {
-              'textName' : '禁行区',
-              'textSize' : 10
-            }
-          ]
+          symbol: {
+            'name': 'danger2',
+            'lineColor': '#FF330b36',
+            'lineWidth': 2,
+            'polygonFill': '#FF330b',
+            'polygonOpacity': 0.6,
+            'textName' : '禁行区',
+            'textSize' : 10
+          }
         }
       )
       var layer = mapObj.getOrCreateLayerById('监控区', {})
