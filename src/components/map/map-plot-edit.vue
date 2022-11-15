@@ -17,7 +17,24 @@
 				</div>
         <div class="l-h">
 					<label>标签：</label>
-					<el-input v-model="symbol.tag" @change="callback('tag', tag)" style="width:220px" size="small"></el-input>
+          <el-select
+            v-model="symbol.tag"
+            multiple
+            collapse-tags
+            style="width:220px"
+            size="small"
+            filterable
+            allow-create
+            @change="callback('tag', tag)"
+            placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+					<!-- <el-input v-model="symbol.tag" @change="callback('tag', tag)" style="width:220px" size="small"></el-input> -->
 				</div>
         <div class="l-h">
 					<label>显示名称：</label>
@@ -28,15 +45,15 @@
 					<el-input-number v-model="symbol.textSize" @change="callback('textSize', textSize)" :min="1" :max="40" size="small"></el-input-number>
 				</div>
 				<div class="l-h" v-show="item.type=='polygon'">
-					<label>线宽：</label>
+					<label>边框宽：</label>
 					<el-input-number v-model="symbol.lineWidth" @change="callback('lineWidth', lineWidth)" :min="1" :max="10" size="small"></el-input-number>
 				</div>
 				<div class="l-h" v-show="item.type=='polygon'">
-					<label>线颜色：</label>
+					<label>边框颜色：</label>
 					<el-color-picker v-model="symbol.lineColor" @change="callback('lineColor', lineColor)" ></el-color-picker>
 				</div>
         <div class="l-h" v-show="item.type==='polygon'">
-					<label>线透明度：</label>
+					<label>边框透明度：</label>
 					<el-input-number v-model="symbol.lineOpacity" @change="callback('lineOpacity', lineOpacity)" :min="0.1" :max="1.0" :precision="1" :step="0.1" size="small"></el-input-number>
 				</div>
 				<div class="l-h" v-show="item.type==='polygon'">
@@ -61,6 +78,16 @@ export default {
   },
   data () {
     return {
+      options: [
+        {
+          value: '进港',
+          label: '进港'
+        },
+        {
+          value: '出港',
+          label: '出港'
+        }
+      ],
       symbol: {
         name: '',
         description: '',
@@ -93,10 +120,8 @@ export default {
   },
   methods: {
     open (item) {
-      console.log(item)
       this.item = item
       this.symbol = item.geo.getSymbol()
-      console.log(this.symbol)
       this.isShow = true
       let xy = item.xy
       this.styleP = {
@@ -114,68 +139,6 @@ export default {
     },
     callback (type, value) {
       let symbol = this.symbol
-      switch (type) {
-        case 'name':
-          symbol = {
-            name: value
-          }
-          break
-        case 'description':
-          symbol = {
-            description: value
-          }
-          break
-        case 'tag':
-          symbol = {
-            tag: value
-          }
-          break
-        case 'textName':
-          symbol = {
-            textName: value
-          }
-          break
-        case 'textSize':
-          symbol = {
-            textSize: value
-          }
-          break
-        case 'lineWidth':
-          symbol = {
-            lineWidth: value
-          }
-          break
-        case 'lineColor':
-          symbol = {
-            lineColor: value
-          }
-          break
-        case 'lineOpacity':
-          symbol = {
-            lineOpacity: value
-          }
-          break
-        case 'polygonOpacity':
-          symbol = {
-            polygonOpacity: value
-          }
-          break
-        case 'polygonFill':
-          symbol = {
-            polygonFill: value
-          }
-          break
-        case 'fontFrameColor':
-          symbol = {
-            markerFill: value
-          }
-          break
-        case 'textSize':
-          symbol = {
-            textSize: value
-          }
-          break
-      }
       this.setSymbol(this.item.geo, symbol)
     },
     // 线宽

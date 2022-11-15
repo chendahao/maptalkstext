@@ -4,7 +4,7 @@
  * @Author: wsw
  * @LastEditors: Please set LastEditors
  * @Date: 2019-04-24 15:30:54
- * @LastEditTime: 2022-11-02 14:58:52
+ * @LastEditTime: 2022-11-15 17:32:39
  */
 // import { Commit, Dispatch } from 'vuex'
 import request from './request'
@@ -16,6 +16,9 @@ export default {
   async loadConfig ({ commit }) {
     commit('setMapConfig', mapConfig)
     commit('setConfigLoaded', true)
+  },
+  async areaLoaded ({ commit }) {
+    commit('setAreaLoaded', true)
   },
   // 获取显示模板
   async getTemplate ({ state }, templateName) {

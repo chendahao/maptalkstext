@@ -4,7 +4,7 @@
  * @Author: wsw
  * @LastEditors: Please set LastEditors
  * @Date: 2019-04-24 15:30:54
- * @LastEditTime: 2022-11-02 15:11:34
+ * @LastEditTime: 2022-11-15 17:32:37
  */
 export default {
   setConfigLoaded (state, data) {
@@ -12,6 +12,9 @@ export default {
   },
   setMapLoaded (state, data) {
     state.mapLoaded = data
+  },
+  setAreaLoaded (state, data) {
+    state.areaLoaded = data
   },
   setMap (state, data) {
     state.map = data

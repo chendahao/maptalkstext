@@ -20,6 +20,7 @@ declare module 'vue' {
     MapPlotEdit: typeof import('./src/components/map/map-plot-edit.vue')['default']
     MapShips: typeof import('./src/components/map/map-ships.vue')['default']
     MapTool: typeof import('./src/components/map/map-tool.vue')['default']
+    PageHeader: typeof import('./src/components/PageHeader/PageHeader.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ShipInfoCard: typeof import('./src/components/map/shipInfoCard.vue')['default']
@@ -37,6 +38,7 @@ declare module 'vue' {
     VChip: typeof import('vuetify/lib')['VChip']
     VCol: typeof import('vuetify/lib')['VCol']
     VContainer: typeof import('vuetify/lib')['VContainer']
+    VDataTable: typeof import('vuetify/lib')['VDataTable']
     VDivider: typeof import('vuetify/lib')['VDivider']
     VFadeTransition: typeof import('vuetify/lib')['VFadeTransition']
     VForm: typeof import('vuetify/lib')['VForm']
@@ -63,6 +65,8 @@ declare module 'vue' {
     VSpacer: typeof import('vuetify/lib')['VSpacer']
     VTextField: typeof import('vuetify/lib')['VTextField']
     VToolbar: typeof import('vuetify/lib')['VToolbar']
+    VToolbarTitle: typeof import('vuetify/lib')['VToolbarTitle']
+    VTooltip: typeof import('vuetify/lib')['VTooltip']
     Warning: typeof import('./src/components/warning.vue')['default']
   }
 }

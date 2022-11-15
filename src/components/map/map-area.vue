@@ -1,9 +1,9 @@
 <!--
  * @Author: chenhao
  * @Date: 2022-11-04 11:38:42
- * @LastEditTime: 2022-11-14 12:10:00
+ * @LastEditTime: 2022-11-15 17:43:03
  * @FilePath: \maptalkstext\src\components\map\map-area.vue
- * @Description: 
+ * @Description: 监控区域
 -->
 <template>
 </template>
@@ -11,6 +11,7 @@
 <script>
 import * as maptalks from 'maptalks'
 import { mapGetters } from 'vuex'
+import { BACMEdgeApi as api } from '@/api/api'
 export default {
   computed: {
     ...mapGetters({
@@ -24,9 +25,59 @@ export default {
   },
   methods: {
     getArea() {
+      let list = []
       let mapObj = this.map
-      var rect = new maptalks.Rectangle(
-        [117.63918174165794,39.0133457806687], 2250, 800,
+      const client = new api.AreaClient('', this.$axios)
+      client.areaAll()
+        .then(res => {
+          res.forEach(element => {
+            var polygon = new maptalks.Polygon(
+              element.coords,
+              {
+                id: element.id,
+                symbol: element.styles
+              }
+            )
+            list.push(polygon)
+          });
+          var layer = mapObj.getOrCreateLayerById('监控区', {})
+          .addGeometry(list)
+          .addTo(mapObj.getInstance());
+        })
+        .finally(() => {
+          // 加载完后 更新菜单
+          this.$emit('areaLoaded', true)
+        })
+    },
+    getArea1() {
+      let mapObj = this.map
+      var rect = new maptalks.Polygon(
+        [
+          [
+            117.63903956604008,
+            39.0134797786512
+          ],
+          [
+            117.63903956604008,
+            39.00605615959742
+          ],
+          [
+            117.66528229904179,
+            39.00602279325861
+          ],
+          [
+            117.66526084136967,
+            39.01349646006375
+          ],
+          [
+            117.63903956604008,
+            39.0134797786512
+          ],
+          [
+            117.63903956604008,
+            39.0134797786512
+          ]
+        ],
         {
           id: '感知区',
           symbol:{
@@ -44,7 +95,6 @@ export default {
       )
       var safe = new maptalks.Polygon(
         [
-          [
             [
               117.64538884162903,
               39.00791304679197
@@ -73,7 +123,6 @@ export default {
               117.64538884162903,
               39.00791304679197
             ]
-          ]
         ],
         {
           id: 'safe',
@@ -88,7 +137,7 @@ export default {
       )
       var warning1 = new maptalks.Polygon(
         [
-          [
+          
             [
               117.6514720916748,
               39.009913883862794
@@ -113,7 +162,7 @@ export default {
               117.6514720916748,
               39.009913883862794
             ]
-          ]
+          
         ],
         {
           id: 'warning1',
@@ -130,7 +179,7 @@ export default {
       )
       var warning2 = new maptalks.Polygon(
         [
-          [
+          
             [
               117.65125215053557,
               39.00983468513791
@@ -151,7 +200,7 @@ export default {
               117.65125215053557,
               39.00983468513791
             ]
-          ]
+          
         ],
         {
           id: 'warning2',
@@ -168,7 +217,7 @@ export default {
       )
       var warning3 = new maptalks.Polygon(
         [
-          [
+          
             [
               117.64677286148071,
               39.009063535023365
@@ -189,7 +238,7 @@ export default {
               117.64677286148071,
               39.009063535023365
             ]
-          ]
+          
         ],
         {
           id: 'warning3',
@@ -206,7 +255,7 @@ export default {
       )
       var warning4 = new maptalks.Polygon(
         [
-          [
+          
             [
               117.65093564987181,
               39.0113144361358
@@ -227,7 +276,7 @@ export default {
               117.65093564987181,
               39.0113144361358
             ]
-          ]
+          
         ],
         {
           id: 'warning4',
@@ -244,7 +293,7 @@ export default {
       )
       var danger1 = new maptalks.Polygon(
         [
-          [
+          
             [
               117.65066206455232,
               39.01120189278148
@@ -265,7 +314,7 @@ export default {
               117.65066206455232,
               39.01120189278148
             ]
-          ]
+          
         ],
         {
           id: 'danger1',
@@ -282,7 +331,7 @@ export default {
       )
       var danger2 = new maptalks.Polygon(
         [
-          [
+          
             [
               117.6518154144287,
               39.00918025017526
@@ -303,7 +352,7 @@ export default {
               117.6518154144287,
               39.00918025017526
             ]
-          ]
+          
         ],
         {
           id: 'danger2',

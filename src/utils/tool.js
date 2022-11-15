@@ -31,6 +31,33 @@ export function sum (arr) {
   return s
 }
 
+export function forEachCoord(arr, fn, context) {
+  if (!Array.isArray(arr)) {
+    return context ? fn.call(context, arr) : fn(arr);
+  }
+
+  var result = [];
+  var p, pp;
+
+  for (var i = 0, len = arr.length; i < len; i++) {
+    p = arr[i];
+
+    if (isNil(p)) {
+      result.push(null);
+      continue;
+    }
+
+    if (Array.isArray(p)) {
+      result.push(forEachCoord(p, fn, context));
+    } else {
+      pp = context ? fn.call(context, p) : fn(p);
+      result.push(pp);
+    }
+  }
+
+  return result;
+}
+
 /**
  * @description: 数组排序（IOS时间格式存在错误，暂未使用）
  * @param {*} obj1

@@ -37,8 +37,12 @@ export default defineConfig(async ({ command, mode }): Promise<UserConfig> => {
           target: 'http://m12.shipxy.com/',
           changeOrigin: true
         },
-        '/api': {
+        '/api/seachart': {
           target: seachart_server_Url,
+          changeOrigin: true
+        },
+        '/api': {
+          target: 'http://192.168.1.32',
           changeOrigin: true
         },
         '/ws': {

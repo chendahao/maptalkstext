@@ -1,31 +1,29 @@
 <!--
  * @Author: chenhao
  * @Date: 2022-11-11 16:45:23
- * @LastEditTime: 2022-11-14 17:35:07
+ * @LastEditTime: 2022-11-15 17:42:53
  * @FilePath: \maptalkstext\src\views\warnArea\edit.vue
  * @Description: 
 -->
 <template>
   <div>
-    <!-- <div class="area-btns">
-      <v-btn color="success" dark @click="startDraw">add</v-btn>
-      <v-btn color="success" dark @click="stopDraw">stop</v-btn>
-      <v-btn color="success" dark @click="saveArea">save</v-btn>
-      <v-btn color="success" dark @click="redraw">redraw</v-btn>
-    </div> -->
-    
+    <div class="area-title">
+      监控区域维护
+    </div>
     <map-main style="width:100vw;height:100vh"></map-main>
-    <map-area></map-area>
+    <map-area @areaLoaded="areaLoaded"></map-area>
     <map-plot-edit ref="plotEdit"></map-plot-edit>
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
 import * as maptalks from 'maptalks'
-import Vue from 'vue'
 import MapMain from '@/components/map/map-main.vue'
 import MapArea from '@/components/map/map-area.vue'
+import { BACMEdgeApi as api } from '@/api/api'
+import { isEqual } from 'lodash'
 import MapPlotEdit from '@/components/map/map-plot-edit.vue'
+// import { forEachCoord } from '@/components/utils/tool'
 
 let drawTool, AreaLayer, toolbar
 export default {
@@ -36,7 +34,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      map: 'MapModule/map'
+      map: 'MapModule/map',
+      // areaLoaded: 'MapModule/areaLoaded'
     }),
   },
   data() {
@@ -50,10 +49,15 @@ export default {
     })
   },
   methods: {
+    areaLoaded (val) {
+      console.log(val)
+      this.getToolBar()
+    },
     initTool () {
       let that = this
       let mapObj = this.map
       AreaLayer = mapObj.getOrCreateLayerById('监控区', {})
+      console.log(AreaLayer)
       console.log(AreaLayer.getGeometries())
       drawTool = new maptalks.DrawTool({
         mode: 'Polygon',
@@ -97,6 +101,7 @@ export default {
           {
             item: '新增',
             click: function () {
+              that.endEdit()
               drawTool.enable();
             }
           },
@@ -105,18 +110,19 @@ export default {
             click: function () {
               that.saveArea()
             }
-          },{
-            item: 'text',
-            click: function () { 
-              that.test()
-            }
           },
           {
-            item: '停止绘制',
-            click: function () {
-              drawTool.disable();
+            item: '返回',
+            click: function () { 
+              that.toMain()
             }
           },
+          // {
+          //   item: 'test',
+          //   click: function () {
+          //     that.test()
+          //   }
+          // },
           // {
           //   item: 'Clear',
           //   click: function () {
@@ -126,6 +132,9 @@ export default {
         ]
       }).addTo(mapObj.getInstance());
     },
+    toMain () {
+      this.$router.push({name: 'areaIndex'})
+    }, 
     addGeometry (param) {
       console.log(param.geometry._coordinates);
       console.log(param.geometry.getSymbol())
@@ -151,36 +160,41 @@ export default {
       let that = this
       let geos =  AreaLayer.getGeometries()
       var items = geos.map(function (item) {
-        // console.log(item.getSymbol().name)
         return {
           item: item.getSymbol().name,
           click: function () {
-            console.log(that.editItem)
             if (that.editItem) {
-              that.editItem.endEdit()
+              that.checkSave(item)
+            } else {
+              that.editItem = item
+              item.startEdit();
+              that.$refs.plotEdit.open({type: 'polygon', xy: {x: 20, y: 60 }, geo: item})
             }
-            // 弹出样式框
-            that.editItem = item
-            item.startEdit();
-            that.$refs.plotEdit.open({type: 'polygon', xy: {x: 20, y: 20 }, geo: item})
           }
         };
       });
       return items
     },
-    test () {
-      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-          confirmButtonText: '确定',
+    checkSave (item) {
+      this.$confirm('还未保持数据变更, 是否保存?', '提示', {
+          confirmButtonText: '保存',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$message('setMessage', '删除成功')
+          // 弹出样式框
+          this.saveArea()
+          this.editItem = item
+          item.startEdit();
+          this.$refs.plotEdit.open({type: 'polygon', xy: {x: 20, y: 20 }, geo: item})
         }).catch(() => {
-          this.$message('setError', '已取消删除')     
+          this.editItem.undoEdit()
+          this.editItem.endEdit()
+          this.$refs.plotEdit.close()
+          this.editItem = null
+          this.$message('已取消')
         });
     },
     startDraw () {
-      // https://maptalks.org/examples/cn/interaction/draw-tool/#interaction_draw-tool
       drawTool.setMode('Polygon').enable();
     },
     stopDraw () {
@@ -193,24 +207,82 @@ export default {
       drawTool.disable();
     },
     saveArea () {
+      // 这里提交editItem
       console.log(this.editItem)
+      console.log(this.editItem.getCoordinates())
       if (this.editItem) {
-        this.editItem.endEdit()
+        const symbol = this.editItem.getSymbol()
+        const client = new api.AreaClient('', this.$axios)
+        let coord0 = [...this.editItem.getCoordinates()[0]]
+        if (isEqual(coord0[0], coord0[coord0.length - 1])) {  
+        } else {
+          coord0.push(coord0[0])
+        }
+        let coords = this.toNumberArrays(coord0)
+        // console.log(coord.toNumberArrays())
+        if (this.editItem.getId() == 'newSymbol') {
+          const area = {
+            name: symbol.name,
+            tags: symbol.tags,
+            description: symbol.description,
+            coords: coords,
+            enableAlarm: false,
+            styles: symbol
+          }
+          client.areaPOST(area)
+            .then(res => {
+              console.log(res)
+              this.getToolBar()
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        } else {
+          // update
+        }
+        // client.
         console.log(this.editItem)
-        console.log(this.editItem.getSymbol())
-        this.$refs.plotEdit.close()
+        const name = this.editItem.getSymbol().name
+        this.$message({message: `${name}-保存成功`, type: 'success'})
+        this.endEdit()
+      } else {
+        this.$message('还没有选择或创建图形')
       }
     },
+    endEdit() {
+      if (this.editItem) {
+        this.editItem.endEdit()
+        this.$refs.plotEdit.close()
+        this.editItem = null
+      }
+    },
+    // 清空
     redraw () {
       // AreaLayer.clear()
+    },
+    test() {
+      this.getToolBar()
+    },
+    toNumberArrays(coordinates) {
+      console.log(coordinates)
+      return coordinates.map(coordinate => {
+        return [coordinate.x, coordinate.y];
+      })
+
+      // return forEachCoord(coordinates, function (coord) {
+      //   return [coord.x, coord.y];
+      // })
     }
   },
 }
 </script>
-<style>
-.area-btns {
+<style scoped>
+.area-title {
+  background-color: #f5f5f5;
+  font-size: 1.25rem;
+  padding: 5px 10px;
   position: absolute;
-  top: 10px;
+  top: 5px;
   left: 20px;
   z-index: 999;
 }

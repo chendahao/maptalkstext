@@ -1,7 +1,7 @@
 /*
  * @Author: chenhao
  * @Date: 2022-10-11 15:33:42
- * @LastEditTime: 2022-11-12 16:54:01
+ * @LastEditTime: 2022-11-15 10:23:43
  * @FilePath: \maptalkstext\src\router.ts
  * @Description: 
  */
@@ -77,7 +77,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/warnArea/index.vue'),
         meta: {
           needLogin: true,
-          layout: false
+          layout: true
         }
       },
       {

@@ -1,7 +1,7 @@
 /*
  * @Author: chenhao
  * @Date: 2022-10-11 15:33:42
- * @LastEditTime: 2022-11-07 11:36:42
+ * @LastEditTime: 2022-11-15 14:18:45
  * @FilePath: \maptalkstext\src\plugins\vuetify.ts
  * @Description: 
  */
@@ -10,6 +10,7 @@ import 'vuetify/dist/vuetify.min.css'
 import type { UserVuetifyPreset } from 'vuetify';
 import type { VuetifyParsedTheme } from 'vuetify/types/services/theme';
 import Vuetify from 'vuetify/lib/framework';
+import zhHans from 'vuetify/src/locale/zh-Hans'
 import Vue from 'vue';
 
 import '@mdi/font/css/materialdesignicons.css';
@@ -20,6 +21,10 @@ import { loadFonts } from './webfontloader';
 export default createVuetify({
   icons: {
     iconfont: 'mdi',
+  },
+  lang: {
+    locales: { zhHans },
+    current: 'zhHans'
   },
   theme: {
     options: {
