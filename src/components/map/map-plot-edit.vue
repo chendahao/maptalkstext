@@ -18,7 +18,7 @@
         <div class="l-h">
 					<label>标签：</label>
           <el-select
-            v-model="symbol.tag"
+            v-model="symbol.tags"
             multiple
             collapse-tags
             style="width:220px"
@@ -91,7 +91,7 @@ export default {
       symbol: {
         name: '',
         description: '',
-        tag: '',
+        tags: '',
         textName: '',
         textSize: 12,
         lineWidth: 1,
@@ -102,7 +102,7 @@ export default {
       },
       name: '',
       description: '',
-      tag: '',
+      tags: '',
       textName: '',
       textSize: 12,
       lineWidth: 1,

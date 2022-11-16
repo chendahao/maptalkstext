@@ -1,7 +1,7 @@
 /*
  * @Author: chenhao
  * @Date: 2022-10-11 15:33:42
- * @LastEditTime: 2022-11-15 10:23:43
+ * @LastEditTime: 2022-11-16 09:34:31
  * @FilePath: \maptalkstext\src\router.ts
  * @Description: 
  */
@@ -81,27 +81,27 @@ const routes: RouteRecordRaw[] = [
         }
       },
       {
-        path: '/area/add',
-        name: 'areaAdd',
-        component: () => import('@/views/warnArea/add.vue'),
-        meta: {
-          needLogin: true,
-          layout: false
-        }
-      },
-      {
-        path: '/area/preview',
-        name: 'areaPreview',
-        component: () => import('@/views/warnArea/preview.vue'),
-        meta: {
-          needLogin: true,
-          layout: false
-        }
-      },
-      {
         path: '/area/edit',
         name: 'areaEdit',
         component: () => import('@/views/warnArea/edit.vue'),
+        meta: {
+          needLogin: true,
+          layout: false
+        }
+      },
+      {
+        path: '/profile',
+        name: 'profileIndex',
+        component: () => import('@/views/profile/index.vue'),
+        meta: {
+          needLogin: true,
+          layout: true
+        }
+      },
+      {
+        path: '/profile/edit',
+        name: 'profileEdit',
+        component: () => import('@/views/profile/edit.vue'),
         meta: {
           needLogin: true,
           layout: false

@@ -1,7 +1,7 @@
 <!--
  * @Author: chenhao
  * @Date: 2022-11-11 16:45:23
- * @LastEditTime: 2022-11-15 17:42:53
+ * @LastEditTime: 2022-11-16 09:12:31
  * @FilePath: \maptalkstext\src\views\warnArea\edit.vue
  * @Description: 
 -->
@@ -213,22 +213,23 @@ export default {
       if (this.editItem) {
         const symbol = this.editItem.getSymbol()
         const client = new api.AreaClient('', this.$axios)
+        const id = this.editItem.getId()
         let coord0 = [...this.editItem.getCoordinates()[0]]
         if (isEqual(coord0[0], coord0[coord0.length - 1])) {  
         } else {
           coord0.push(coord0[0])
         }
+        // 把maptalk 的{x: , y:}坐标转换为 [[x,y]]
         let coords = this.toNumberArrays(coord0)
-        // console.log(coord.toNumberArrays())
-        if (this.editItem.getId() == 'newSymbol') {
-          const area = {
-            name: symbol.name,
-            tags: symbol.tags,
-            description: symbol.description,
-            coords: coords,
-            enableAlarm: false,
-            styles: symbol
-          }
+        const area = {
+          name: symbol.name,
+          tags: symbol.tags,
+          description: symbol.description,
+          coords: coords,
+          enableAlarm: false,
+          styles: symbol
+        }
+        if (id == 'newSymbol') {
           client.areaPOST(area)
             .then(res => {
               console.log(res)
@@ -239,6 +240,14 @@ export default {
             })
         } else {
           // update
+          client.areaPUT(id ,area)
+            .then(res => {
+              console.log(res)
+              this.getToolBar()
+            })
+            .catch(err => {
+              console.log(err)
+            })
         }
         // client.
         console.log(this.editItem)
