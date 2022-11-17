@@ -1,7 +1,7 @@
 <!--
  * @Author: chenhao
  * @Date: 2022-11-11 16:45:23
- * @LastEditTime: 2022-11-16 09:12:31
+ * @LastEditTime: 2022-11-17 16:08:33
  * @FilePath: \maptalkstext\src\views\warnArea\edit.vue
  * @Description: 
 -->
@@ -23,6 +23,7 @@ import MapArea from '@/components/map/map-area.vue'
 import { BACMEdgeApi as api } from '@/api/api'
 import { isEqual } from 'lodash'
 import MapPlotEdit from '@/components/map/map-plot-edit.vue'
+import { newGuid } from '@/components/utils/tool'
 // import { forEachCoord } from '@/components/utils/tool'
 
 let drawTool, AreaLayer, toolbar
@@ -230,6 +231,7 @@ export default {
           styles: symbol
         }
         if (id == 'newSymbol') {
+          area.id = newGuid()
           client.areaPOST(area)
             .then(res => {
               console.log(res)

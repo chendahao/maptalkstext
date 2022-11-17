@@ -1,7 +1,7 @@
 /*
  * @Author: chenhao
  * @Date: 2022-10-11 15:33:42
- * @LastEditTime: 2022-11-16 09:34:31
+ * @LastEditTime: 2022-11-17 10:37:10
  * @FilePath: \maptalkstext\src\router.ts
  * @Description: 
  */
@@ -102,6 +102,24 @@ const routes: RouteRecordRaw[] = [
         path: '/profile/edit',
         name: 'profileEdit',
         component: () => import('@/views/profile/edit.vue'),
+        meta: {
+          needLogin: true,
+          layout: false
+        }
+      },
+      {
+        path: '/alarmPolicy',
+        name: 'alarmPolicyIndex',
+        component: () => import('@/views/alarmPolicy/index.vue'),
+        meta: {
+          needLogin: true,
+          layout: true
+        }
+      },
+      {
+        path: '/alarmPolicy/edit',
+        name: 'alarmPolicyEdit',
+        component: () => import('@/views/alarmPolicy/edit.vue'),
         meta: {
           needLogin: true,
           layout: false

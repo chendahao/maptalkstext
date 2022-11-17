@@ -1,11 +1,19 @@
 /*
  * @Author: chenhao
  * @Date: 2022-11-16 18:30:30
- * @LastEditTime: 2022-11-16 18:38:22
+ * @LastEditTime: 2022-11-17 10:00:26
  * @FilePath: \maptalkstext\src\mixins\fileMixin.js
  * @Description: 
  */
 var fileMixin = {
+  data() {
+    return {
+      file: {
+        data: undefined,
+        fileName: ''
+      },
+    }
+  },
   methods: {
     jsonToFile(res, name){
       const stringData = JSON.stringify(res, null, 2)
@@ -23,6 +31,17 @@ var fileMixin = {
         // 释放一个之前已经存在的、通过调用 URL.createObjectURL() 创建的 URL 对象。
         // 当你结束使用某个 URL 对象之后，应该通过调用这个方法来让浏览器知道不用在内存中继续保留对这个文件的引用了。
         URL.revokeObjectURL(objectURL)
+    },
+    addFile (file) {
+      if (file === undefined) {
+        this.file = {
+          data: undefined,
+          fileName: ''
+        }
+      } else {
+        this.file.data = file
+        this.file.fileName = file.name
+      }
     },
   },
 }

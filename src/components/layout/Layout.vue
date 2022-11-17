@@ -45,14 +45,14 @@
               <v-list-item-title>Map</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item :to="{ name: 'bigScreen' }">
+          <!-- <v-list-item :to="{ name: 'bigScreen' }">
             <v-list-item-icon>
               <v-icon>mdi-information</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title>监控大屏</v-list-item-title>
             </v-list-item-content>
-          </v-list-item>
+          </v-list-item> -->
           <v-list-item :to="{ name: 'areaIndex' }">
             <v-list-item-icon>
               <v-icon>mdi-information</v-icon>
@@ -67,6 +67,14 @@
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title>设备管理</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item :to="{ name: 'alarmPolicyIndex' }">
+            <v-list-item-icon>
+              <v-icon>mdi-information</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>报警策略管理</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>

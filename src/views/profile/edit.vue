@@ -1,7 +1,7 @@
 <!--
  * @Author: chenhao
  * @Date: 2022-11-16 09:34:08
- * @LastEditTime: 2022-11-16 17:01:49
+ * @LastEditTime: 2022-11-17 11:10:17
  * @FilePath: \maptalkstext\src\views\profile\edit.vue
  * @Description: 
 -->
@@ -99,7 +99,7 @@ export default {
   },
   computed: {
     formTitle () {
-      return this.editedIndex === '-1' ? '新增设备' : '编辑设备'
+      return this.editedItem.id === '-1' ? '新增设备' : '编辑设备'
     },
   },
   methods: {

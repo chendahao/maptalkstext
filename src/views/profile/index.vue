@@ -1,7 +1,7 @@
 <!--
  * @Author: chenhao
  * @Date: 2022-11-11 16:44:59
- * @LastEditTime: 2022-11-16 18:40:29
+ * @LastEditTime: 2022-11-17 16:03:17
  * @FilePath: \maptalkstext\src\views\profile\index.vue
  * @Description: 设备管理
 -->
@@ -48,11 +48,6 @@
           </v-btn>
         </template>
         <v-card>
-          <v-card-title primary-title>
-            <span class="red darken-1">
-              * 从文件导入后将覆盖现有得配置
-            </span>
-          </v-card-title>
           <v-card-text>
             <v-file-input
               ref="uploadplan"
@@ -62,6 +57,9 @@
               persistent-hint
               @change="addFile"
             ></v-file-input>
+            <span class="text-red darken-1">
+              * 从文件导入后将覆盖现有得配置
+            </span>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -136,6 +134,7 @@ import PageHeader from '@/components/PageHeader'
 import { BACMEdgeApi as api } from '@/api/api'
 import profileEdit from './edit.vue'
 import fileMixin from '@/mixins/fileMixin'
+import dayjs from 'dayjs'
 export default {
   components: {
     PageHeader,
@@ -155,10 +154,6 @@ export default {
         { text: '标签', sortable: false, value: 'tags' },
         { text: '操作', sortable: false, align: 'center', value: 'actions' }
       ],
-      file: {
-        data: undefined,
-        fileName: ''
-      },
       deviceTypes: [],
       editedItem: {},
       deviceType: null,      
@@ -256,19 +251,22 @@ export default {
       const deviceType = this.deviceType
       if (!deviceType) return
       this.editedItem = item
-      console.log()
       this.isShow = true
     },
     closeDialog () {
       this.isShow = false
     },
     saveItem (editItem) {
-      console.log(editItem)
       let isAdd = false
-      if (editItem.id === '-1') isAdd = true
+      if (editItem.id === '-1') {
+        isAdd = true
+        editItem.id = dayjs().unix().toString()
+      }
       let saveapi = ''
-      if (editItem.location) editItem.location = JSON.parse(editItem.location)
-      if (editItem.bBox) editItem.bBox = JSON.parse(editItem.bBox)
+      // console.log(editItem.location)
+      // console.log(editItem.bBox)
+      if (editItem.location && typeof(editItem.bBox) !== 'object') editItem.location = JSON.parse('[' + editItem.location + ']')
+      if (editItem.bBox && typeof(editItem.bBox) !== 'object') editItem.bBox = JSON.parse('[' + editItem.bBox + ']')
       const type = editItem.type
       const client = new api.ProfileClient('', this.$axios)
       switch (type) {
@@ -287,8 +285,8 @@ export default {
         case 'WLG': saveapi = isAdd === true ? client.wLGPOST(editItem) : client.wLGPUT(editItem)
         break;
       }
-      saveapi.then(res => {
-        console.log(res)
+      saveapi.then(() => {
+        this.getTypeProfile(this.deviceType)
         this.$message({message: `${isAdd?'创建': '更新'}成功`, type: 'success'})
         this.closeDialog()
       })
@@ -347,27 +345,30 @@ export default {
       const client = new api.ProfileClient('', this.$axios)
       client.export3()
         .then(res => {
-          console.log(res)
           this.jsonToFile(res, '设备配置文件')
         })
     },
     importProfile () {
-      const client = new api.ProfileClient('', this.$axios)
-      client.import3(this.file)
-        .then(res => {
-          console.log(res)
-        })
-    },
-    addFile (file) {
-      if (file === undefined) {
-        this.file = {
-          data: undefined,
-          fileName: ''
-        }
-      } else {
-        this.file.data = file
-        this.file.fileName = file.name
+      if (this.file.data === undefined) {
+        this.$message('还没有选择要导入的文件')
+        return
       }
+      this.$confirm('确定导入此文件吗?导入后将覆盖原始配置', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const client = new api.ProfileClient('', this.$axios)
+          client.import3(this.file)
+            .then(res => {
+              this.getTypeProfile()
+              this.$message({message: '导入成功', type: 'success'})
+            })
+            .catch(err => {
+              this.showError(err)
+            });
+        }).catch(() => {
+        });
     },
     showError(err) {
       console.error(err.response)
