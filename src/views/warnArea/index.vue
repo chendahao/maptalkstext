@@ -1,7 +1,7 @@
 <!--
  * @Author: chenhao
  * @Date: 2022-11-11 16:44:59
- * @LastEditTime: 2022-11-17 15:32:22
+ * @LastEditTime: 2022-11-17 16:16:10
  * @FilePath: \maptalkstext\src\views\warnArea\index.vue
  * @Description: 
 -->
@@ -209,7 +209,6 @@ export default {
               this.getdata()
             })
             .catch(err => {
-              debugger
               console.log(err)
             });
         }).catch(() => {
